@@ -5,6 +5,7 @@ import {contains, filter, clone, has, isNil, type, omit} from 'ramda';
 
 const filterEventData = (gd, eventData, event) => {
     let filteredEventData;
+
     if (contains(event, ['click', 'hover', 'selected'])) {
         const points = [];
 
@@ -46,7 +47,7 @@ const filterEventData = (gd, eventData, event) => {
             points[i] = pointData;
         }
         filteredEventData = {points};
-    } else if (event === 'relayout') {
+    } else if ((event === 'relayout') || (event === 'restyle')) {
         /*
          * relayout shouldn't include any big objects
          * it will usually just contain the ranges of the axes like
@@ -139,7 +140,8 @@ class PlotlyGraph extends Component {
         });
         gd.on('plotly_hover', eventData => {
             const hoverData = filterEventData(gd, eventData, 'hover');
-            if (!isNil(hoverData)) {
+
+             if (!isNil(hoverData)) {
                 if (setProps) {
                     setProps({hoverData});
                 }
@@ -178,6 +180,19 @@ class PlotlyGraph extends Component {
                 }
             }
         });
+
+        gd.on('plotly_restyle', eventData => {
+            const restyleData = filterEventData(gd, eventData, 'restyle');
+
+            console.log(restyleData);
+            if (!isNil(restyleData)) {
+                if (setProps) {
+                    setProps({restyleData});
+
+                }
+            }
+        });
+
         gd.on('plotly_unhover', () => {
             if (clear_on_unhover) {
                 if (setProps) {
@@ -281,6 +296,9 @@ const graphPropTypes = {
      * when the user zooms or pans on the plot
      */
     relayoutData: PropTypes.object,
+
+
+    restyleData: PropTypes.object,
 
     /**
      * Plotly `figure` object. See schema:
@@ -515,6 +533,9 @@ const graphDefaultProps = {
     hoverData: null,
     selectedData: null,
     relayoutData: null,
+
+    restyleData: null,
+
     figure: {data: [], layout: {}},
     animate: false,
     animation_options: {
