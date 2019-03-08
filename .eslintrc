@@ -77,7 +77,7 @@
     "no-new": ["error"],
     "no-new-func": ["error"],
     "no-new-wrappers": ["error"],
-    "no-param-reassign": ["error"],
+    "no-param-reassign": ["off"],
     "no-process-env": ["warn"],
     "no-proto": ["error"],
     "no-redeclare": ["error"],
@@ -87,7 +87,6 @@
     "no-sequences": ["error"],
     "no-shadow": ["off"],
     "no-throw-literal": ["error"],
-    "no-undefined": ["error"],
     "no-unused-expressions": ["error"],
     "no-use-before-define": ["error", "nofunc"],
     "no-useless-call": ["error"],
@@ -105,7 +104,7 @@
     "react/no-unknown-property": ["error"],
     "react/prefer-es6-class": ["error", "always"],
     "react/prop-types": "error",
-    "valid-jsdoc": ["error"],
+    "valid-jsdoc": ["off"],
     "yoda": ["error"],
     "spaced-comment": ["error", "always", {
       "block": {
